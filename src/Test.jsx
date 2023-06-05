@@ -214,8 +214,9 @@ function Test({ containsAlpha, urnDimensions, nalpha, nbeta, nalphaActual, nbeta
         <p style={{ ...tStyle }}>
             The tree is {containsAlpha ? "" : "NOT"} sick!</p>;
 
-    const textDrawn = <p style={{ ...tStyle, visibility: Number.isNaN(drawnFrom[0]) ? "hidden" : "visible" }}>the fruits that were sampled:</p>;
-    const textSeen = <p style={{ ...tStyle, visibility: Number.isNaN(drawnFrom[0]) ? "hidden" : "visible" }}>the test results that the farmer sees:</p>
+    const textDrawn = <p style={{ ...tStyle, visibility: Number.isNaN(drawnFrom[0]) ? "hidden" : "visible" }}>
+        the berries that were sampled <br></br>({nalphaActual} <b><span style={{ color: color_palette[0] }}>infected</span></b>, {nbetaActual} <b><span style={{ color: color_palette[1] }}>sour</span></b>, {nwhiteActual} normal) :</p>;
+    const textSeen = <p style={{ ...tStyle, visibility: Number.isNaN(drawnFrom[0]) ? "hidden" : "visible" }}>the test results that the farmer sees:<br></br><span style={{ visibility: "hidden" }}>""</span></p>
     const urn = <GenerateUrn drawnFrom={drawnFrom}
         ballColors={ballColors} urnDimensions={urnDimensions}
         mode="normal" />;
@@ -227,7 +228,7 @@ function Test({ containsAlpha, urnDimensions, nalpha, nbeta, nalphaActual, nbeta
         opacity: drawButtonOpacity,
         cursor: drawButtonOpacity > .5 ? "pointer" : "auto"
     }}
-        onClick={() => handleClick(ndrawn)}> Click to sample some<br></br> fruits from the tree</button >;
+        onClick={() => handleClick(ndrawn)}> Click to sample some<br></br> berries from the tree</button >;
 
     // the next-page button
     const nextPageButton = <button style={{
@@ -248,8 +249,8 @@ function Test({ containsAlpha, urnDimensions, nalpha, nbeta, nalphaActual, nbeta
             ballColors[i] === color_palette[1] ? observedColor :
                 ballColors[i] === color_palette[0] ? observedColor : NaN;
         return (col)
-    }
-    );
+    });
+
     // the balls that have been drawn
     const drawnBalls = drawnFrom[0] === NaN ? "" : <GenerateUrn drawnFrom={drawnFrom}
         ballColors={drawnBallColors}

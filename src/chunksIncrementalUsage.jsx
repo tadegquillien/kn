@@ -35,7 +35,7 @@ const sessionId = Math.random().toString(36).substring(7);
 
 // Experiment ids should be descriptive strings. For UG4/MInf/MSc projects,
 // they should include the surname of the experimenter.
-const experimentId = "knowledgeExp";
+const experimentId = "knowledgeExpV1";
 
 // Send a minimalist message, with just a timestamp.
 // In a real experiment, this would be replaced with everything that

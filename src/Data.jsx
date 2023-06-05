@@ -8,7 +8,10 @@ const Data = {
   //the attention check during the instructions trial
   attnCheck: [],
   //the comprehension questions
+  precomprehension: [],
   comprehension: [],
+  //the participants' answers during the familiarization phase
+  familiarization: [],
   //the participant's answers to the knowledge question
   knowledgeResponses: [],
   //the participant's answers to the belief question

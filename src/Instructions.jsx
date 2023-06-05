@@ -29,6 +29,7 @@ const Instructions = ({ setPhase }) => {
         <InstSeven nextButton={nextButton} />,
         <InstEight nextButton={nextButton} />,
         <InstNine nextButton={nextButton} />,
+        <InstTen setCurrentPage={setCurrentPage} />,
         <LastInst setPhase={setPhase} />
     ]
 
@@ -87,12 +88,12 @@ const InstThree = ({ nextButton }) => {
 
     const textone = <div>
 
-        <p>When a tree becomes sick, some of the berries on that tree start secreting a chemical called alpha-{chemical}.
+        <p>When a tree gets sick, some of the berries on that tree become <b><span style={{ color: color_palette[0] }}>infected</span></b>.
         </p>
-        <p>If a berry contains alpha-{chemical}, we will <b>represent</b> it in {color_palette[0]}, like this:</p>
+        <p>If a berry is infected, we will <b>represent</b> it in <b><span style={{ color: color_palette[0] }}>{color_palette[0]}</span></b>, like this:</p>
     </div>
 
-    const orangeBall = <GenerateUrn key={1} drawnFrom={[1]}
+    const infectedBall = <GenerateUrn key={1} drawnFrom={[1]}
         ballColors={[color_palette[0]]} urnDimensions={[1, 1]} mode="seen" />;
 
     const texttwo = <div>
@@ -105,7 +106,7 @@ const InstThree = ({ nextButton }) => {
         <div style={textStyle}>
 
             {textone}
-            {orangeBall}
+            {infectedBall}
             {texttwo}
             {nextButton}<br></br>
         </div>
@@ -135,7 +136,7 @@ const InstFour = ({ nextButton }) => {
 
     const textthree = <div>
         <p>Then he conducted chemical tests. To represent the results of the tests, we will use the colors:</p>
-        <p>-Purple for berries that test positive for the alpha-{chemical},</p>
+        <p>-Purple for berries that test positive for infection,</p>
         <p>-White for berries that test negative.</p>
         <p> Here the farmer sees the following results from his tests:</p>
     </div>;
@@ -148,7 +149,7 @@ const InstFour = ({ nextButton }) => {
 
     const textfour = <div>
         <p>
-            So, the farmer sees that one of the berries he has collected contains the alpha-{chemical}.
+            So, the farmer sees that one of the berries he has collected is infected.
             This means the tree is probably sick.
         </p>
     </div>
@@ -173,8 +174,9 @@ const InstFour = ({ nextButton }) => {
 const InstFive = ({ nextButton }) => {
     const textone = <div>
         <p>But the test is not completely reliable. Sometimes if produces false positives.</p>
-        <p>This is because even in healthy trees, a small number of berries naturally contain a chemical called the <span style={{ color: color_palette[1] }}>beta-{chemical}</span>.</p>
-        <p>If a berry contains <span style={{ color: color_palette[1] }}>beta-{chemical}</span>, we will represent it in <span style={{ color: color_palette[1] }}>blue</span>, like this:</p>
+        <p>This is because even in healthy trees, a small number of berries are naturally <b><span style={{ color: color_palette[1] }}>sour</span></b>.</p>
+        <p>Having a few <b><span style={{ color: color_palette[1] }}>sour</span></b> berries is completely normal and is unrelated to a tree's health.</p>
+        <p>If a berry is <b><span style={{ color: color_palette[1] }}>sour</span></b>, we will represent it in <b><span style={{ color: color_palette[1] }}>blue</span></b>, like this:</p>
     </div>;
 
     const blueBall = <GenerateUrn key={1} drawnFrom={[1]}
@@ -182,8 +184,8 @@ const InstFive = ({ nextButton }) => {
 
     const texttwo = <div>
         <p>(Of course in reality the berry's actual color is white.)
-            <p>Because <span style={{ color: color_palette[1] }}>beta-{chemical}</span> is very similar to <span style={{ color: color_palette[0] }}>alpha-{chemical}</span>, it will also produce a positive test result.
-                The farmer is aware of this, but he uses the test anyway because berries with beta-enzymes are relatively rare.</p>
+            <p>Because <b><span style={{ color: color_palette[1] }}>sour</span></b> berries contain chemicals that are similar to the ones in <b><span style={{ color: color_palette[0] }}>infected</span></b> berries, they will also produce a positive test result.
+                The farmer is aware of this, but he uses the test anyway because sour berries are relatively rare.</p>
         </p>
     </div>
 
@@ -230,7 +232,7 @@ const InstSix = ({ nextButton }) => {
 
     const textfour = <div>
         <p>
-            The test reveals the presence of an enzyme in one of the berries.
+            The <b><span style={{ color: color_palette[1] }}>sour</span></b> berry produced a positive test.
             So, even berries from healthy trees can sometimes cause positive tests.
         </p>
     </div>
@@ -256,6 +258,7 @@ const InstSeven = ({ nextButton }) => {
 
 
     const [response, setResponse] = useState(0);
+    // const [responseStore, setResponseStore] = useState([]);
     const textzero = <div><p><b>Question:</b></p></div>;
 
     const textone = <div>
@@ -291,7 +294,10 @@ const InstSeven = ({ nextButton }) => {
     </div>
 
     const handleChange = (e) => {
-        setResponse(e.target.value)
+        setResponse(e.target.value);
+        // setResponseStore((a)=>a.push(e.target.value));
+        // console.log(responseStore);
+        Data.precomprehension.push(e.target.value);
     }
     const question = <form>
         <select style={{ fontSize: "25px" }} onChange={(e) => handleChange(e)}>
@@ -333,11 +339,9 @@ const InstSeven = ({ nextButton }) => {
 const InstEight = ({ nextButton }) => {
     const textone = <div>
         <p>In summary:</p>
-        <p>-All trees have a small number of berries that contain
-            the beta-{chemical} (represented in <b><span style={{ color: color_palette[1] }}>{color_palette[1]}</span></b>),</p>
-        <p>-Trees that get sick also have berries that contain
-            the alpha-{chemical} (represented in <b><span style={{ color: color_palette[0] }}>{color_palette[0]}</span></b>),</p>
-        <p>-Both kinds of {chemical}s produce a positive test result (represented in <b><span style={{ color: "purple" }}>purple</span></b>).</p>
+        <p>-All trees have a small number of berries that are naturally <b><span style={{ color: color_palette[1] }}>sour</span></b>,</p>
+        <p>-When a tree gets sick, some of its berries become <b><span style={{ color: color_palette[0] }}>infected</span></b>,</p>
+        <p>-Both <b><span style={{ color: color_palette[1] }}>sour</span></b> and <b><span style={{ color: color_palette[0] }}>infected</span></b> berries produce a positive test result (represented in <b><span style={{ color: "purple" }}>purple</span></b>).</p>
         <p>So, testing the berries gives the farmer some information about whether a tree is sick, although the test is not perfect.</p>
     </div>;
 
@@ -352,13 +356,13 @@ const InstEight = ({ nextButton }) => {
 const InstNine = ({ nextButton }) => {
 
     const textone = <div>
-        <p>In this study, we will show you {ballsList.length} trees that the farmer is testing to find out whether they are sick.</p>
-        <p>For each tree, we will tell <b>you</b> whether the tree is sick or not,
-            and which berries contain <span style={{ color: color_palette[0] }}>alpha-</span> and <span style={{ color: color_palette[1] }}>beta-</span>{chemical}s.
-            But <b>the farmer</b> doesn't have that information! He has to rely on the chemical tests to find out whether the tree is sick.</p>
-        <p>We will show you the berries that the farmer collects, and the results of the tests that he makes.
-            Then we will ask you whether you think the farmer {knowledgeFirst ? "knows" : "believes"} that
-            the tree is sick, and whether you think he {!knowledgeFirst ? "knows" : "believes"} that the tree is sick.</p>
+
+        <p>In a first part of the study, you will play as the farmer, testing four trees. </p>
+        <br></br>
+
+        <p>Then in the main part of the study, you will just be an external observer. </p>
+
+
     </div>
 
 
@@ -371,10 +375,11 @@ const InstNine = ({ nextButton }) => {
 }
 
 
-const LastInst = ({ setPhase }) => {
+const InstTen = ({ setCurrentPage }) => {
 
     const [posResponse, setPosResponse] = useState(0);
     const [lookResponse, setLookResponse] = useState(0);
+    const [sourResponse, setSourResponse] = useState(0);
 
     const handlePos = (e) => {
         setPosResponse(e.target.value)
@@ -384,12 +389,17 @@ const LastInst = ({ setPhase }) => {
         setLookResponse(e.target.value)
     };
 
+    const handleSour = (e) => {
+        setSourResponse(e.target.value)
+    };
+
     const handleClick = () => {
         Data.comprehension.push({
             "posQuestion": posResponse,
-            "lookQuestion": lookResponse
+            "lookQuestion": lookResponse,
+            "sourQuestion": sourResponse
         });
-        setPhase("test");
+        setCurrentPage((i) => i + 1);
 
     };
 
@@ -398,8 +408,7 @@ const LastInst = ({ setPhase }) => {
     </div>;
 
     const questions = <form>
-        <label for="positiveQuestion">Both the <span style={{ color: color_palette[0] }}>alpha-</span> and
-            the <span style={{ color: color_palette[1] }}>beta-</span>{chemical} cause a <span style={{ color: "purple" }}>positive</span> test</label>
+        <label for="positiveQuestion">Both <b><span style={{ color: color_palette[1] }}>sour</span></b> and <b><span style={{ color: color_palette[0] }}>infected</span></b> berries cause a <b><span style={{ color: "purple" }}>positive</span></b> test</label>.
         <br></br>
         <select name="positiveQuestion"
             onChange={(e) => handlePos(e)} style={{ fontSize: "20px" }}>
@@ -418,22 +427,57 @@ const LastInst = ({ setPhase }) => {
             <option name="true" value="True">True</option>
             <option name="false" value="False">False</option>
         </select>
+        <br></br>
+        <br></br>
 
+        <label for="sourQuestion">Only sick trees can have <b><span style={{ color: color_palette[1] }}>sour</span></b> berries.</label>
+        <br></br>
+        <select name="sourQuestion"
+            onChange={(e) => handleSour(e)} style={{ fontSize: "20px" }}>
+            <option name="NA" value="NA"> </option>
+            <option name="true" value="True">True</option>
+            <option name="false" value="False">False</option>
+        </select>
 
     </form>
 
-    const nextPhaseButton = (posResponse != 0 & lookResponse != 0) ?
-        <button style={buttonStyle} onClick={() => handleClick()}>Click to start the task</button> :
+    const nextPageButton = (posResponse != 0 & lookResponse != 0 & sourResponse != 0) ?
+        <button style={buttonStyle} onClick={() => handleClick()}>Click to start the first part of the study</button> :
         "";
 
     return (<div style={textStyle}>
         {textone}
         {questions}
-        {nextPhaseButton}
+        {nextPageButton}
 
     </div>
     )
 
+}
+
+const LastInst = ({ setPhase }) => {
+
+    const handleClick = () => {
+        setPhase("familiarization");
+    };
+
+    const textone = <div >
+        <p>In the first part of the study, you will play as the farmer.</p>
+        <p>You will make tests on four different trees.</p>
+        <p>For each tree, you will collect samples and test them, and we will ask you whether you think the tree is sick.</p>
+
+    </div>;
+
+    const nextPhaseButton =
+        <button style={buttonStyle} onClick={() => handleClick()}>Click to start</button>;
+
+    return (
+        <div style={textStyle}>
+            {textone}
+            {nextPhaseButton}
+        </div>
+
+    )
 }
 
 export default Instructions;

@@ -53,6 +53,7 @@ const DemographicsTwo = ({ setPhase }) => {
     const [race, setRace] = useState("NA");
     const [colorBlind, setColorBlind] = useState("NA");
     const [comment, setComment] = useState("NA");
+    const [philosophy, setPhilosophy] = useState("NA");
     //this variable lets us know how many items the participant
     //has also completed. After he has completed all required items
     //he can go to the end of the study
@@ -78,12 +79,20 @@ const DemographicsTwo = ({ setPhase }) => {
     };
 
     const handleColorBlind = (e) => {
+        if (colorBlind == "NA") { setCounter((a) => a + 1) }
         setColorBlind(e.target.value);
+    };
+
+    const handlePhilosophy = (e) => {
+        if (philosophy == "NA") { setCounter((a) => a + 1) }
+        setPhilosophy(e.target.value);
     };
 
     const handleComment = (e) => {
         setComment(e.target.value);
     };
+
+
 
     //when the participant hits submit, record the data
     const handleClick = () => {
@@ -92,9 +101,9 @@ const DemographicsTwo = ({ setPhase }) => {
         Data.demographics.push({ 'race': race });
         Data.demographics.push({ 'comment': comment });
         Data.demographics.push({ 'colorBlind': colorBlind });
+        Data.demographics.push({ 'philosophy': philosophy });
         setPhase("ending");
         sendData(Data);
-
     }
 
     //display the page
@@ -154,6 +163,17 @@ const DemographicsTwo = ({ setPhase }) => {
                 </select>
                 <br></br>
                 <br></br>
+
+                {/* a dropdown for philosophy*/}
+                <label for="philosophy">Have you ever taken a college-level philosophy class? </label>
+                <select name="philosophy" id="philosophy" onChange={(e) => handlePhilosophy(e)}>
+                    <option value="NA"> </option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+                <br></br>
+                <br></br>
+
                 {/*an optional opportunity to give a comment */}
                 <label for="comment">Please let us know if you have any comment about the study:</label>
                 <br></br>
@@ -164,7 +184,7 @@ const DemographicsTwo = ({ setPhase }) => {
 
             {/*when the participant answered all required items, a button appears that allows him to
         go to the end of the study*/}
-            {counter > 2 ? <button style={buttonStyle} onClick={() => handleClick()}>submit</button> : null}
+            {counter > 4 ? <button style={buttonStyle} onClick={() => handleClick()}>submit</button> : null}
         </div>
 
     )
